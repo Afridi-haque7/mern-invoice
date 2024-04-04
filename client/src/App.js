@@ -1,9 +1,10 @@
 import './App.css';
+import Invoice from './components/Invoice';
 
 function App() {
   return (
-    <div>
-      Hi Invoice Page
+    <div className="">
+      <Invoice />
     </div>
   );
 }
