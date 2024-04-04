@@ -1,6 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 
+/*
+MONGODB_URL=mongodb+srv://afridihq97:fTSqneIwywqH1sOR@invoice-db.jbhzytt.mongodb.net/?retryWrites=true&w=majority&appName=invoice-db
+*/
+
 function App() {
   return (
     <div className="App">
