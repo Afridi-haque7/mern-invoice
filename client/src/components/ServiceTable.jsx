@@ -27,7 +27,6 @@ const ServiceTable = () => {
           </tr>
         </thead>
         <tbody className="bg-white px-10">
-
           {data.map((i) => (
             <tr>
               <td>{i.service}</td>
@@ -38,10 +37,10 @@ const ServiceTable = () => {
                   placeholder="1"
                 />
               </td>
-              <td>{i.rate}</td>
-              <td>{i.discount}</td>
-              <td>{i.tax}</td>
-              <td>{i.amount}</td>
+              <td>&#x20b9;{i.rate}</td>
+              <td>&#x20b9;{i.discount}</td>
+              <td>&#x20b9;{i.tax}</td>
+              <td>&#x20b9;{i.amount}</td>
               <td>
                 <span className="flex gap-2">
                   <FilePenLine className="bg-gray-300 p-1 rounded-xl cursor-pointer" />

@@ -15,7 +15,7 @@ const Tax = () => {
     <div className="p-3 md:p-10 h-[100vh]">
       <div className="flex justify-between">
         <h3>Tax Rates</h3>
-        <Button onClick={handleOpen}>Add Custom Tax</Button>
+        <Button onClick={handleOpen}>Add Tax</Button>
       </div>
       <TaxTable className="pl-2" />
       <AddTaxModal state={open} handler={handleClose}/>

@@ -6,7 +6,6 @@ import Modal from "@mui/material/Modal";
 import Switch from "react-switch";
 
 const AddTaxModal = (props) => {
-        const [open, setOpen] = useState(false);
 
         // const handleOpen = () => setOpen(true);
         // const handleClose = props.handleClose;
@@ -16,17 +15,31 @@ const AddTaxModal = (props) => {
           setChecked(nextChecked);
         };
 
+        const [validated, setValidated] = useState(false);
+
+        const handleSubmit = (event) => {
+          const form = event.currentTarget;
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          setValidated(true);
+        };
+
         const style = {
           position: "absolute",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 400,
+          width: 300,
           bgcolor: "background.paper",
-          border: "2px solid #000",
+          border: "1px solid #000",
           boxShadow: 24,
-          p: 4,
+          p: 3,
+          borderRadius: 2,
         };
+        
 
 
   return (
@@ -35,25 +48,33 @@ const AddTaxModal = (props) => {
       onClose={props.handler}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      className=""
     >
       <Box sx={style}>
-        <h3>Add Tax</h3>
-        <Form>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Tax Name</Form.Label>
-            <Form.Control type="text" placeholder="gst" />
+        <h3 className="text-[18px] md:text-xl">Add Tax</h3>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <Form.Group className="mb-2" controlId="formBasicEmail">
+            <Form.Label>
+              Tax Name <span className="text-red-500">&#42;</span>
+            </Form.Label>
+            <Form.Control type="text" placeholder="gst" required />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Tax Rates</Form.Label>
-            <Form.Control type="number" placeholder="12" />
+          <Form.Group className="mb-2" controlId="formBasicEmail">
+            <Form.Label>
+              Tax Rates <span className="text-red-500">&#42;</span>
+            </Form.Label>
+            <Form.Control type="number" placeholder="12" required />
           </Form.Group>
 
-          <Form.Group className="mb-3 w-full" controlId="formBasicEmail">
-            <Form.Label>Type</Form.Label>
+          <Form.Group className="mb-2 w-full" controlId="formBasicEmail">
+            <Form.Label>
+              Type <span className="text-red-500">&#42;</span>
+            </Form.Label>
             <select
               id="discount"
               name="discount"
+              required
               className="rounded-md border bg-white w-full h-10 py-0 pl-2 pr-7 focus:ring-2 focus:ring-inset"
             >
               <option value="cash">Percentage</option>
@@ -63,7 +84,7 @@ const AddTaxModal = (props) => {
           </Form.Group>
 
           <div>
-            <p className="flex justify-between">
+            <p className="flex w-full justify-between">
               <span className="font-semibold">Status</span>
               <span>
                 <Switch
