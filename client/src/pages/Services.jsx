@@ -1,8 +1,13 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";
 
 const Services = () => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/tax');
+  }
   return (
     <div className="bg-gray-100 p-3 h-[100vh]">
       <h3 className="text-2xl font-bold">Add Invoice</h3>
@@ -52,7 +57,7 @@ const Services = () => {
               </select>
             </Form.Group>
           </div>
-          <div className="md:flex justify-between w-[65%]">
+          <div className="md:flex justify-between md:w-[65%] w-full">
             <Form.Group
               className="mb-3 w-full md:w-[46%] border-black"
               controlId="formBasicEmail"
@@ -66,15 +71,19 @@ const Services = () => {
               controlId="formBasicEmail"
             >
               <Form.Label>Tax</Form.Label>
-              <select
-                id="discount"
-                name="discount"
-                className="rounded-md border bg-white w-full h-10 py-0 pl-2 pr-7 focus:ring-2 focus:ring-inset"
-              >
-                <option value="cash">GST</option>
-                <option value="card">Service Tax</option>
-                <option value="upi">Service + GST</option>
-              </select>
+              <span className="flex gap-1">
+                <select
+                  id="discount"
+                  name="discount"
+                  className="rounded-md border bg-white w-full h-10 py-0 pl-2 pr-7 focus:ring-2 focus:ring-inset"
+                >
+                  <option value="cash">GST (18%)</option>
+                  <option value="card">ServiceChrg+GST (18%)</option>
+                  <option value="upi">GST (12%)</option>
+                  <option value="card">ServiceChrg+GST (5%)</option>
+                </select>
+                <Button onClick={handleClick}>Add</Button>
+              </span>
             </Form.Group>
           </div>
 

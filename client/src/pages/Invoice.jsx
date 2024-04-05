@@ -1,13 +1,20 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Dropdown from "react-bootstrap/Dropdown";
-import InputGroup from "react-bootstrap/InputGroup";
-import SplitButton from "react-bootstrap/SplitButton";
+// import InputGroup from "react-bootstrap/InputGroup";
+// import SplitButton from "react-bootstrap/SplitButton";
 import Billing from "../components/Billing";
 import ServiceTable from "../components/ServiceTable";
+import { useNavigate } from "react-router-dom";
+
+
 
 const Invoice = () => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/services');
+  }
   return (
     <div className="p-3  bg-gray-100">
       <h3 className="text-2xl font-bold">Add Invoice</h3>
@@ -95,7 +102,7 @@ const Invoice = () => {
                   <option value="card"></option>
                   <option value="upi"></option>
                 </select>
-                <Button>Add</Button>
+                <Button onClick={handleClick} >Add</Button>
               </span>
             </Form.Group>
           </div>
