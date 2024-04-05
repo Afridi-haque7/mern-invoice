@@ -45,7 +45,6 @@ const Services = () => {
               controlId="formBasicEmail"
             >
               <Form.Label>Discount Type</Form.Label>
-              {/* <Form.Control type="date" placeholder="Select a date" /> */}
               <select
                 id="discount"
                 name="discount"
@@ -89,8 +88,8 @@ const Services = () => {
 
           <div className="flex justify-end gap-4 mt-5 border-t py-5">
             <Button
-              variant="outline"
-              className="border border-black"
+              variant="outline-primary"
+              className="border"
               type="submit"
             >
               Cancel

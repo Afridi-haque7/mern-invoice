@@ -25,7 +25,7 @@ const data = [
     id: 4,
     name: "GST",
     rate: 5,
-    status: "Active",
+    status: "Inactive",
   },
 ];
 
@@ -52,7 +52,15 @@ const TaxTable = () => {
               <td>{i.name}</td>
               <td>{`${i.rate}%`}</td>
               <td>
-                <span className="text-green-500 bg-green-100 rounded-lg text-xs p-1">{i.status}</span>
+                {i.status === "Active" ? (
+                  <span className="text-green-500 bg-green-100 rounded-lg text-xs p-1">
+                    {i.status}
+                  </span>
+                ) : (
+                  <span className="text-red-500 bg-red-100 rounded-lg text-xs p-1">
+                    {i.status}
+                  </span>
+                )}
               </td>
               <td>
                 {
