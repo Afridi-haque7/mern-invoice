@@ -4,6 +4,7 @@ import Button from "react-bootstrap/esm/Button";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Switch from "react-switch";
+import axios from "axios";
 
 const AddTaxModal = (props) => {
   const [checked, setChecked] = useState(false);
@@ -13,21 +14,40 @@ const AddTaxModal = (props) => {
 
   const [validated, setValidated] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     const form = event.currentTarget;
     event.preventDefault();
 
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
     const taxName = event.target[0].value;
     const taxRate = event.target[1].value;
     const taxType = event.target[2].value;
     const taxStatus = event.target[3].value;
 
-    const formData = [taxName, taxRate, taxType, taxStatus];
+    const formData = {
+      name: taxName,
+      rate: taxRate,
+      type: taxType,
+      status: taxStatus
+    };
+
+
     console.log(formData);
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    try {
+      await axios
+        .post("http://localhost:8000/api/post", formData)
+        .then((response) => response.data)
+        .then((data) => {
+          console.log("Success:", data);
+        }).catch((error) => {console.log(error);});
+    } catch (error) {
+      console.log('Error:',error.response.data);
+    }
+
     setValidated(true);
   };
 
@@ -54,7 +74,12 @@ const AddTaxModal = (props) => {
     >
       <Box sx={style}>
         <h3 className="text-[18px] md:text-xl">Add Tax</h3>
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <Form
+          noValidate
+          validated={validated}
+          action="POST"
+          onSubmit={handleSubmit}
+        >
           <Form.Group className="mb-2" controlId="formBasicEmail">
             <Form.Label>
               Tax Name <span className="text-red-500">&#42;</span>

@@ -32,7 +32,7 @@ const arr = [
 
 const TaxTable = () => {
   const { data } = useFetch("http://localhost:8000/api/get");
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
 
