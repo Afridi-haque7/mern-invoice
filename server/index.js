@@ -26,7 +26,7 @@ mongoose.connection.on("disconnected", () => {
 
 // middlewares
 app.use(express.json());
-app.use("/api", taxRoute);
+app.use("/api/tax", taxRoute);
 
 
 app.listen(8000, () => {

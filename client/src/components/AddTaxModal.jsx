@@ -5,8 +5,10 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Switch from "react-switch";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const AddTaxModal = (props) => {
+  const navigate = useNavigate();
   const [checked, setChecked] = useState(false);
   const handleChange = () => {
     setChecked(!checked);
@@ -39,7 +41,7 @@ const AddTaxModal = (props) => {
 
     try {
       await axios
-        .post("http://localhost:8000/api/post", formData)
+        .post("http://localhost:8000/api/tax/post", formData)
         .then((response) => response.data)
         .then((data) => {
           console.log("Success:", data);
@@ -122,7 +124,7 @@ const AddTaxModal = (props) => {
           </Form.Group>
 
           <div className="flex justify-end gap-2">
-            <Button variant="outline-primary" className="" type="submit">
+            <Button variant="outline-primary" className="" onClick={() => navigate("/services")}>
               Cancel
             </Button>
             <Button variant="primary" className="w-20" type="submit">

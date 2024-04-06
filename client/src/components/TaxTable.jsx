@@ -8,7 +8,7 @@ const TaxTable = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/get");
+      const response = await axios.get("http://localhost:8000/api/tax/get");
       setData(response.data);
     } catch (error) {
       console.log("Error fetching data: " + error.message);
@@ -24,7 +24,7 @@ const TaxTable = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/delete/${id}`);
+      await axios.delete(`http://localhost:8000/api/tax/delete/${id}`);
       console.log("Tax details deleted:", id);
       alert('Data deleted successfully');
       setData((prevData) => prevData.filter((item) => item.id !== id));

@@ -23,20 +23,21 @@ const Services = () => {
     }
   };
 
-  
   useEffect(() => {
     fetchData();
   }, []);
 
-
   const handleSubmit = (event) => {
     const form = event.currentTarget;
+    event.preventDefault();
+
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
 
     setValidated(true);
+    if(validated) navigate("/");
   };
 
   console.log(data);
@@ -125,11 +126,12 @@ const Services = () => {
                   <option value="card">ServiceChrg+GST (18%)</option>
                   <option value="upi">GST (12%)</option>
                   <option value="card">ServiceChrg+GST (5%)</option> */}
-                  {
-                    data.map((i, index) => (
-                      <option key={index} value={i.name}>{`${i.name} ${i.rate}%`}</option>
-                    ))
-                  }
+                  {data.map((i, index) => (
+                    <option
+                      key={index}
+                      value={i.name}
+                    >{`${i.name} ${i.rate}%`}</option>
+                  ))}
                 </select>
                 <Button onClick={handleClick}>{<CirclePlus />}</Button>
               </span>
@@ -137,7 +139,7 @@ const Services = () => {
           </div>
 
           <div className="flex justify-end gap-4 mt-5 border-t py-5">
-            <Button variant="outline-primary" className="border" type="submit">
+            <Button variant="outline-primary" className="border" type="submit" onClick={() => {navigate("/")}} >
               Cancel
             </Button>
             <Button variant="primary" className="w-20" type="submit">
