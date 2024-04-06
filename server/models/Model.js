@@ -1,0 +1,24 @@
+import mongoose from "mongoose";
+const { Schema } = mongoose;
+
+const TaxSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  rate: {
+    type: Number,
+    required: true,
+  },
+  type: {
+    type: String,
+    required: true,
+  },
+  status: {
+    type: Boolean,
+    default: true,
+  },
+});
+
+
+export default mongoose.model("Model", TaxSchema);
