@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import express from "express";
-import taxRoute from "./routes/routes.js"
+import taxRoute from "./routes/tax.js"
 import cors from "cors";
 import bodyParser from "body-parser";
 

@@ -16,7 +16,7 @@ const Services = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/get");
+      const response = await axios.get("http://localhost:8000/api/tax/get");
       setData(response.data);
     } catch (error) {
       console.log("Error fetching data: " + error.message);

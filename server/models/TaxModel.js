@@ -21,4 +21,4 @@ const TaxSchema = new mongoose.Schema({
 });
 
 
-export default mongoose.model("Model", TaxSchema);
+export default mongoose.model("TaxModel", TaxSchema);

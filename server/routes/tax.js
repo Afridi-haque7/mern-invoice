@@ -1,15 +1,15 @@
 import express, { response } from "express";
-import Model from "../models/Model.js";
+import TaxModel from "../models/TaxModel.js";
 
 const router = express.Router();
 
 //CREATE
 router.post("/post", async (req, res) => {
-  const newModel = new Model(req.body);
+  const newTaxModel = new TaxModel(req.body);
   // console.log(newModel);
   try {
-    const savedModel = await newModel.save();
-    res.status(200).json(savedModel);
+    const savedTaxModel = await newTaxModel.save();
+    res.status(200).json(savedTaxModel);
   } catch (error) {
     res.status(500).json(error);
     console.log(error);
@@ -19,8 +19,8 @@ router.post("/post", async (req, res) => {
 //GETALL
 router.get("/get", async (req, res) => {
   try {
-    const models = await Model.find();
-    res.status(200).json(models);
+    const taxModels = await TaxModel.find();
+    res.status(200).json(taxModels);
   } catch (err) {
     res.status(500).json(err);
     console.log(err);
@@ -31,8 +31,8 @@ router.get("/get", async (req, res) => {
 //GET
 router.get("/get/:id", async (req, res) => {
   try {
-    const model = await Model.findById(req.params.id);
-    res.status(200).json(model);
+    const taxModel = await TaxModel.findById(req.params.id);
+    res.status(200).json(taxModel);
   } catch (err) {
     res.status(500).json(err);
     console.log(err);
@@ -42,12 +42,12 @@ router.get("/get/:id", async (req, res) => {
 //UPDATE
 router.put("/update/:id", async (req, res) => {
   try {
-    const updatedModel = await Model.findByIdAndUpdate(
+    const updatedTaxModel = await TaxModel.findByIdAndUpdate(
       req.params.id,
       { $set: req.body },
       { new: true }
     );
-    res.status(200).json(updatedModel);
+    res.status(200).json(updatedTaxModel);
   } catch (err) {
     res.status(500).json(err);
     console.log(err);
@@ -57,7 +57,7 @@ router.put("/update/:id", async (req, res) => {
 // DELETE
 router.delete("/delete/:id", async (req, res) => {
   try {
-    await Model.findByIdAndDelete(req.params.id);
+    await TaxModel.findByIdAndDelete(req.params.id);
     res.status(200).json("Deleted.");
   } catch (err) {
     res.status(500).json(err);
