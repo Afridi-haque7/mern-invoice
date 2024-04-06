@@ -27,20 +27,43 @@ const Services = () => {
     fetchData();
   }, []);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     const form = event.currentTarget;
     event.preventDefault();
+
+    const formData = {
+      type: event.target[0].value,
+      price: event.target[1].value,
+      disType: event.target[2].value,
+      disValue: event.target[3].value,
+      tax: event.target[4].value,
+    };
+
+    // console.log(formData);
 
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
 
-    setValidated(true);
-    if(validated) navigate("/");
-  };
+    try {
+      await axios
+        .post("http://localhost:8000/api/service/post", formData)
+        .then((response) => response.data)
+        .then((data) => {
+          console.log("Success:", data);
+          alert("Successfully Data Added!");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log("Error:", error.response.data);
+    }
 
-  console.log(data);
+    setValidated(true);
+    // if(validated) navigate("/");
+  };
 
   return (
     <div className="bg-gray-100 p-3 h-[100vh]">
@@ -57,12 +80,12 @@ const Services = () => {
               </Form.Label>
               <select
                 id="servicetype"
-                name="currency"
+                name="serviceType"
                 required
                 className="rounded-md border bg-white w-full h-10 py-0 pl-2 pr-7 focus:ring-2 focus:ring-inset"
               >
-                <option value="cash">Hotel</option>
-                <option value="card">Product</option>
+                <option value="Hotel">Hotel</option>
+                <option value="Product">Product</option>
               </select>
             </Form.Group>
 
@@ -91,9 +114,7 @@ const Services = () => {
                 required
                 className="rounded-md border bg-white w-full h-10 py-0 pl-2 pr-7 focus:ring-2 focus:ring-inset"
               >
-                <option value="cash">Percentage</option>
-                <option value="card">Percentile</option>
-                <option value="upi">Amount</option>
+                <option value="Percentage">Percentage</option>
               </select>
             </Form.Group>
           </div>
@@ -122,10 +143,6 @@ const Services = () => {
                   className="rounded-md border bg-white w-full h-10 py-0 pl-2 pr-7 focus:ring-2 focus:ring-inset"
                   required
                 >
-                  {/* <option value="cash">GST (18%)</option>
-                  <option value="card">ServiceChrg+GST (18%)</option>
-                  <option value="upi">GST (12%)</option>
-                  <option value="card">ServiceChrg+GST (5%)</option> */}
                   {data.map((i, index) => (
                     <option
                       key={index}
@@ -139,7 +156,14 @@ const Services = () => {
           </div>
 
           <div className="flex justify-end gap-4 mt-5 border-t py-5">
-            <Button variant="outline-primary" className="border" type="submit" onClick={() => {navigate("/")}} >
+            <Button
+              variant="outline-primary"
+              className=""
+              type="submit"
+              onClick={() => {
+                navigate("/");
+              }}
+            >
               Cancel
             </Button>
             <Button variant="primary" className="w-20" type="submit">

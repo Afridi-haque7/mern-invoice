@@ -1,15 +1,16 @@
 import express, { response } from "express";
-import TaxModel from "../models/TaxModel.js";
+import ServiceModel from "../models/ServiceModel.js";
 
 const router = express.Router();
 
+
 //CREATE
 router.post("/post", async (req, res) => {
-  const newTaxModel = new TaxModel(req.body);
-  // console.log(newModel);
+  const newServiceModel = new ServiceModel(req.body);
+  console.log(newServiceModel);
   try {
-    const savedTaxModel = await newTaxModel.save();
-    res.status(200).json(savedTaxModel);
+    const savedServiceModel = await newServiceModel.save();
+    res.status(200).json(savedServiceModel);
   } catch (error) {
     res.status(500).json(error);
     console.log(error);
@@ -20,8 +21,8 @@ router.post("/post", async (req, res) => {
 //GETALL
 router.get("/get", async (req, res) => {
   try {
-    const taxModels = await TaxModel.find();
-    res.status(200).json(taxModels);
+    const serviceModels = await ServiceModel.find();
+    res.status(200).json(serviceModels);
   } catch (err) {
     res.status(500).json(err);
     console.log(err);
@@ -32,8 +33,8 @@ router.get("/get", async (req, res) => {
 //GET
 router.get("/get/:id", async (req, res) => {
   try {
-    const taxModel = await TaxModel.findById(req.params.id);
-    res.status(200).json(taxModel);
+    const serviceModel = await ServiceModel.findById(req.params.id);
+    res.status(200).json(serviceModel);
   } catch (err) {
     res.status(500).json(err);
     console.log(err);
@@ -43,12 +44,12 @@ router.get("/get/:id", async (req, res) => {
 //UPDATE
 router.put("/update/:id", async (req, res) => {
   try {
-    const updatedTaxModel = await TaxModel.findByIdAndUpdate(
+    const updatedServiceModel = await ServiceModel.findByIdAndUpdate(
       req.params.id,
       { $set: req.body },
       { new: true }
     );
-    res.status(200).json(updatedTaxModel);
+    res.status(200).json(updatedServiceModel);
   } catch (err) {
     res.status(500).json(err);
     console.log(err);
@@ -58,12 +59,13 @@ router.put("/update/:id", async (req, res) => {
 // DELETE
 router.delete("/delete/:id", async (req, res) => {
   try {
-    await TaxModel.findByIdAndDelete(req.params.id);
+    await ServiceModel.findByIdAndDelete(req.params.id);
     res.status(200).json("Deleted.");
   } catch (err) {
     res.status(500).json(err);
     console.log(err);
   }
 });
+
 
 export default router;

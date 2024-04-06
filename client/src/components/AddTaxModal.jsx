@@ -33,7 +33,9 @@ const AddTaxModal = (props) => {
     };
 
 
-    console.log(formData);
+    // console.log(formData);
+
+    
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
@@ -52,6 +54,7 @@ const AddTaxModal = (props) => {
     }
 
     setValidated(true);
+    if (validated) navigate("/tax");
   };
 
   const style = {

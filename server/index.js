@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import express from "express";
 import taxRoute from "./routes/tax.js"
+import serviceRoute from "./routes/service.js"
 import cors from "cors";
 import bodyParser from "body-parser";
 
@@ -27,6 +28,7 @@ mongoose.connection.on("disconnected", () => {
 // middlewares
 app.use(express.json());
 app.use("/api/tax", taxRoute);
+app.use("/api/service", serviceRoute);
 
 
 app.listen(8000, () => {
