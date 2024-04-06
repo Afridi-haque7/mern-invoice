@@ -1,0 +1,15 @@
+{
+  "name": "invoice-server",
+  "version": "1.0.0",
+  "description": "invoice",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "afridi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemon": "^3.1.0"
+  }
+}
