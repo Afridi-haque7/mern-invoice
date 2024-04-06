@@ -6,10 +6,6 @@ import Modal from "@mui/material/Modal";
 import Switch from "react-switch";
 
 const AddTaxModal = (props) => {
-
-        // const handleOpen = () => setOpen(true);
-        // const handleClose = props.handleClose;
-
         const [checked, setChecked] = useState(true);
         const handleChange = (nextChecked) => {
           setChecked(nextChecked);
