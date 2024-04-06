@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { EllipsisVertical } from "lucide-react";
-import { useTable } from "react-table";
-import useFetch from "../hooks/useFetch";
 import { Trash2, FilePenLine } from "lucide-react";
 import axios from "axios";
 
@@ -29,6 +26,7 @@ const TaxTable = () => {
     try {
       await axios.delete(`http://localhost:8000/api/delete/${id}`);
       console.log("Tax details deleted:", id);
+      alert('Data deleted successfully');
       setData((prevData) => prevData.filter((item) => item.id !== id));
     } catch (error) {
       console.log("Error deleting item: ", error);

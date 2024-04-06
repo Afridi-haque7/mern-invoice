@@ -43,6 +43,7 @@ const AddTaxModal = (props) => {
         .then((response) => response.data)
         .then((data) => {
           console.log("Success:", data);
+          alert('Successfully Data Added!')
         }).catch((error) => {console.log(error);});
     } catch (error) {
       console.log('Error:',error.response.data);

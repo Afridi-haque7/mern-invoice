@@ -1,27 +1,45 @@
-import React,{useState} from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 import { CirclePlus } from "lucide-react";
-
+import axios from "axios";
 
 const Services = () => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate('/tax');
-  }
-    const [validated, setValidated] = useState(false);
+    navigate("/tax");
+  };
 
-    const handleSubmit = (event) => {
-      const form = event.currentTarget;
-      if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
+  const [validated, setValidated] = useState(false);
+  const [data, setData] = useState([]);
 
-      setValidated(true);
-    };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/get");
+      setData(response.data);
+    } catch (error) {
+      console.log("Error fetching data: " + error.message);
+    }
+  };
 
+  
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setValidated(true);
+  };
+
+  console.log(data);
 
   return (
     <div className="bg-gray-100 p-3 h-[100vh]">
@@ -98,15 +116,20 @@ const Services = () => {
               </Form.Label>
               <span className="flex gap-1">
                 <select
-                  id="discount"
-                  name="discount"
+                  id="tax"
+                  name="tax"
                   className="rounded-md border bg-white w-full h-10 py-0 pl-2 pr-7 focus:ring-2 focus:ring-inset"
                   required
                 >
-                  <option value="cash">GST (18%)</option>
+                  {/* <option value="cash">GST (18%)</option>
                   <option value="card">ServiceChrg+GST (18%)</option>
                   <option value="upi">GST (12%)</option>
-                  <option value="card">ServiceChrg+GST (5%)</option>
+                  <option value="card">ServiceChrg+GST (5%)</option> */}
+                  {
+                    data.map((i, index) => (
+                      <option key={index} value={i.name}>{`${i.name} ${i.rate}%`}</option>
+                    ))
+                  }
                 </select>
                 <Button onClick={handleClick}>{<CirclePlus />}</Button>
               </span>
