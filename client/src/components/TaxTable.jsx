@@ -1,42 +1,40 @@
-import React,{useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import { EllipsisVertical } from "lucide-react";
 import { useTable } from "react-table";
 import useFetch from "../hooks/useFetch";
-
-const arr = [
-  {
-    id: 1,
-    name: "GST",
-    rate: 18,
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "ServiceChrg+GST",
-    rate: 18,
-    status: "Active",
-  },
-  {
-    id: 3,
-    name: "GST",
-    rate: 12,
-    status: "Active",
-  },
-  {
-    id: 4,
-    name: "GST",
-    rate: 5,
-    status: "Inactive",
-  },
-];
+import { Trash2, FilePenLine } from "lucide-react";
+import axios from "axios";
 
 const TaxTable = () => {
-  const { data } = useFetch("http://localhost:8000/api/get");
-  // console.log(data);
+  const [data, setData] = useState([]);
+
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/get");
+      setData(response.data);
+    } catch (error) {
+      console.log("Error fetching data: " + error.message);
+    }
+  };
+
 
   useEffect(() => {
+    fetchData()
+  }, [data]);
 
-  },[])
+  // console.log(data);
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8000/api/delete/${id}`);
+      console.log("Tax details deleted:", id);
+      setData((prevData) => prevData.filter((item) => item.id !== id));
+    } catch (error) {
+      console.log("Error deleting item: ", error);
+    }
+  };
+
   return (
     <div className="mt-5 h-full w-full overflow-x-scroll rounded-sm">
       <table className="table-auto w-full border rounded-md relative">
@@ -55,7 +53,7 @@ const TaxTable = () => {
               key={index}
               className="text-gray-500 w-full md:text-md text-sm border-b hover:bg-stone-100"
             >
-              <td>{index+1}</td>
+              <td>{index + 1}</td>
               <td>{i.name}</td>
               <td>{`${i.rate}%`}</td>
               <td>
@@ -71,7 +69,13 @@ const TaxTable = () => {
               </td>
               <td>
                 {
-                  <EllipsisVertical className="bg-gray-300 p-1 rounded-xl cursor-pointer" />
+                  <span className="flex gap-2">
+                    <FilePenLine className="bg-gray-300 p-1 rounded-xl cursor-pointer" />
+                    <Trash2
+                      className="bg-gray-300 p-1 rounded-xl cursor-pointer"
+                      onClick={() => handleDelete(i._id)}
+                    />
+                  </span>
                 }
               </td>
             </tr>
