@@ -2,9 +2,10 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import express from "express";
 import taxRoute from "./routes/routes.js"
-
+import cors from "cors";
 
 const app = express();
+app.use(cors());
 dotenv.config();
 
 const connect = async () => {

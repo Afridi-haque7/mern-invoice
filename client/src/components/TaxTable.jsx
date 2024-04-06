@@ -1,8 +1,9 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { EllipsisVertical } from "lucide-react";
 import { useTable } from "react-table";
+import useFetch from "../hooks/useFetch";
 
-const data = [
+const arr = [
   {
     id: 1,
     name: "GST",
@@ -30,6 +31,12 @@ const data = [
 ];
 
 const TaxTable = () => {
+  const { data } = useFetch("http://localhost:8000/api/get");
+  console.log(data);
+
+  useEffect(() => {
+
+  },[])
   return (
     <div className="mt-5 h-full w-full overflow-x-scroll rounded-sm">
       <table className="table-auto w-full border rounded-md relative">
@@ -43,22 +50,22 @@ const TaxTable = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((i) => (
+          {data.map((i, index) => (
             <tr
-              key={i.id}
+              key={index}
               className="text-gray-500 w-full md:text-md text-sm border-b hover:bg-stone-100"
             >
-              <td>{i.id}</td>
+              <td>{index+1}</td>
               <td>{i.name}</td>
               <td>{`${i.rate}%`}</td>
               <td>
-                {i.status === "Active" ? (
+                {i.status === true ? (
                   <span className="text-green-500 bg-green-100 rounded-lg text-xs p-1">
-                    {i.status}
+                    Active
                   </span>
                 ) : (
                   <span className="text-red-500 bg-red-100 rounded-lg text-xs p-1">
-                    {i.status}
+                    Inactive
                   </span>
                 )}
               </td>
