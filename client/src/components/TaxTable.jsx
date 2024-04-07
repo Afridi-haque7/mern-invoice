@@ -4,8 +4,7 @@ import axios from "axios";
 
 const TaxTable = () => {
   const [data, setData] = useState([]);
-
-
+  // Fetching tax data from database using axios.get() method.
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -18,12 +17,12 @@ const TaxTable = () => {
   };
 
 
+  // Rerendering the fetchdata, whenever the data has changed
   useEffect(() => {
     fetchData()
   }, [data]);
 
-  // console.log(data);
-
+  // Function to handle delete operation on tax data, using axios.delete() method
   const handleDelete = async (id) => {
     try {
       await axios.delete(

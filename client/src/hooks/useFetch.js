@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+// Function to fetching data from database
 const useFetch = (url) => {
   const [data, setData] = useState([]);
 

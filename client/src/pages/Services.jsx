@@ -5,15 +5,20 @@ import { useNavigate } from "react-router-dom";
 import { CirclePlus } from "lucide-react";
 import axios from "axios";
 
+
 const Services = () => {
+  // Using useNavigate() hook to navigate to different pages
   const navigate = useNavigate();
   const handleClick = () => {
     navigate("/tax");
   };
 
+  // For form validation purpose
   const [validated, setValidated] = useState(false);
+  // Using useState() hook to store data from database array after fetching
   const [data, setData] = useState([]);
 
+  // Fetching data from service data model using axios.get() method, it is an asynchronous function
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -25,22 +30,24 @@ const Services = () => {
     }
   };
 
+  // Using useEffect() hook to call fetchData() function when the component is mounted
   useEffect(() => {
     fetchData();
   }, []);
 
+  // Checking Form Validation when user submit the form
   const handleSubmit = async (event) => {
     const form = event.currentTarget;
-    event.preventDefault();
+    event.preventDefault(); // Preventing default submit behaviour of Form
 
-    // const [taxData, setTaxData] = useState(null);
+    // Defining formData object to store data from the Form
     const formData = {
       type: event.target[0].value,
       price: event.target[1].value,
       disType: event.target[2].value,
       disValue: event.target[3].value,
-      taxType: '',
-      taxRate: '',
+      taxType: "",
+      taxRate: "",
     };
 
     const selectedIndex = event.target[4].selectedIndex;
@@ -49,13 +56,13 @@ const Services = () => {
     formData.taxType = selectedOptionData.name;
     formData.taxRate = selectedOptionData.rate;
 
-    // console.log(formData);
-
+  
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
 
+    // Adding data from Form to Database using axios.post() method, and alerting user if it is successful
     try {
       await axios
         .post(
@@ -76,18 +83,17 @@ const Services = () => {
     }
 
     setValidated(true);
-    // if(validated) navigate("/");
   };
 
   return (
     <div className="bg-gray-100 p-5 lg:p-3 h-[100vh]">
       <h3 className="text-2xl font-bold">Add Service Details</h3>
       <div className="form">
+      {/* Form element of Service Page */}
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <div className="lg:flex justify-between">
             <Form.Group
               className="mb-3 w-full lg:w-[30%] border-black"
-              controlId="formBasicEmail"
             >
               <Form.Label>
                 Service Type <span className="text-red-500">&#42;</span>
@@ -106,19 +112,22 @@ const Services = () => {
 
             <Form.Group
               className="mb-3 w-full lg:w-[30%]"
-              controlId="formBasicEmail"
             >
               <Form.Label>
                 Selling Price <span className="text-red-500">&#42;</span>
               </Form.Label>
               <span className="flex gap-1">
-                <Form.Control type="number" placeholder="e.g.1200" min="0" required />
+                <Form.Control
+                  type="number"
+                  placeholder="e.g.1200"
+                  min="0"
+                  required
+                />
               </span>
             </Form.Group>
 
             <Form.Group
               className="mb-3 w-full lg:w-[30%]"
-              controlId="formBasicEmail"
             >
               <Form.Label>
                 Discount Type <span className="text-red-500">&#42;</span>
@@ -136,17 +145,21 @@ const Services = () => {
           <div className="lg:flex justify-between lg:w-[65%] w-full">
             <Form.Group
               className="mb-3 w-full lg:w-[46%] border-black"
-              controlId="formBasicEmail"
             >
               <Form.Label>
                 Discount Value <span className="text-red-500">&#42;</span>
               </Form.Label>
-              <Form.Control type="number" placeholder="e.g.10" min="0" max="100" required />
+              <Form.Control
+                type="number"
+                placeholder="e.g.10"
+                min="0"
+                max="100"
+                required
+              />
             </Form.Group>
 
             <Form.Group
               className="mb-3 w-full lg:w-[46%]"
-              controlId="formBasicEmail"
             >
               <Form.Label>
                 Tax <span className="text-red-500">&#42;</span>
@@ -158,6 +171,7 @@ const Services = () => {
                   className="rounded-md border bg-white w-full h-10 py-0 pl-2 pr-7 focus:ring-2 focus:ring-inset"
                   required
                 >
+                {/* Mapping data from data array to show dynamic values from database */}
                   {data.map((i, index) => (
                     <option
                       key={index}

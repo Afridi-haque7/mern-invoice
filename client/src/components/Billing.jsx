@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Billing = (props) => {
+  // Destructuring props data 
   const { amount, discount, tax, total } = props.data;
 
   return (

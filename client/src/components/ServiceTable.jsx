@@ -3,34 +3,32 @@ import { Trash2, FilePenLine } from "lucide-react";
 import axios from "axios";
 import Billing from "./Billing";
 
-
 const ServiceTable = (props) => {
-  
   const [data, setData] = useState([]);
   const [singleData, setSingleData] = useState({});
   const [qty, setQty] = useState(1);
 
+  const [tableData, setTableData] = useState({
+    amount: 0,
+    discount: 0,
+    tax: 0,
+    total: 0,
+  });
 
-    const [tableData, setTableData] = useState({
-      amount: 0,
-      discount: 0,
-      tax: 0,
-      total: 0,
-    });
+  // Function to fetching service data from the database, using axios.get() method.
   const fetchData = async () => {
-
     try {
       const response = await axios.get(
         "https://mern-invoice-zc6k.onrender.com/api/service/get"
       );
       setData(response.data);
       setSingleData(response.data[props.ind]);
-      const amount = (qty * response.data[props.ind].price);
+      const amount = qty * response.data[props.ind].price;
       const discount =
-        ((response.data[props.ind].price *
+        (response.data[props.ind].price *
           qty *
           response.data[props.ind].disValue) /
-        100);
+        100;
       const tax =
         (response.data[props.ind].price *
           qty *
@@ -38,18 +36,19 @@ const ServiceTable = (props) => {
         100;
       const total = amount - discount + tax;
       setTableData({ amount, discount, tax, total });
-      // console.log(tableData, typeof(tableData.amount));
     } catch (error) {
       console.log("Error fetching data: " + error.message);
     }
   };
 
-  
+  // Using useEffect hook to fetching data from database 
   useEffect(() => {
     fetchData();
   }, [props.ind, qty]);
 
   const [deleteData, setDeleteData] = useState(false);
+
+  // Function to delete a particular item from the table and database using axios.delete() method.
   const handleDelete = async (id) => {
     try {
       await axios.delete(
@@ -65,14 +64,12 @@ const ServiceTable = (props) => {
     setDeleteData(false);
   };
 
-
+  // Function to handle the calculation when user changes the product quantity
   const handleQtyChange = (event) => {
     const newQty = event.target.value;
     setQty(newQty);
   };
 
-
-// console.log(singleData);
 
   return (
     <>
@@ -90,6 +87,7 @@ const ServiceTable = (props) => {
             </tr>
           </thead>
           <tbody className="bg-white px-10">
+          {/* Mapping data to show on the table */}
             {!deleteData && (
               <tr>
                 <td>{singleData.type}</td>
@@ -106,15 +104,15 @@ const ServiceTable = (props) => {
                 <td>&#x20b9;{tableData.amount.toFixed(2)}</td>
                 <td>
                   &#x20b9;
-                  {(tableData.discount).toFixed(2)}
+                  {tableData.discount.toFixed(2)}
                 </td>
                 <td>
                   &#x20b9;
-                  {(tableData.tax).toFixed(2)}
+                  {tableData.tax.toFixed(2)}
                 </td>
                 <td>
                   &#x20b9;
-                  {(tableData.total).toFixed(2)}
+                  {tableData.total.toFixed(2)}
                 </td>
                 <td>
                   <span className="flex gap-2">
@@ -135,6 +133,6 @@ const ServiceTable = (props) => {
       <Billing data={tableData} />
     </>
   );
-}
+};
 
 export default ServiceTable;

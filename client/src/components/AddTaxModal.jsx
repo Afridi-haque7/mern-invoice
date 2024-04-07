@@ -5,10 +5,12 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Switch from "react-switch";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AddTaxModal = (props) => {
   const navigate = useNavigate();
+
+  // Controls toogling of status icon of the Modal
   const [checked, setChecked] = useState(false);
   const handleChange = () => {
     setChecked(!checked);
@@ -16,31 +18,25 @@ const AddTaxModal = (props) => {
 
   const [validated, setValidated] = useState(false);
 
+  // Handling the submit of Modal Form
   const handleSubmit = async (event) => {
     const form = event.currentTarget;
     event.preventDefault();
 
-    const taxName = event.target[0].value;
-    const taxRate = event.target[1].value;
-    const taxType = event.target[2].value;
-    const taxStatus = event.target[3].value;
-
+    // Defining formData array to store Form data from User
     const formData = {
-      name: taxName,
-      rate: taxRate,
-      type: taxType,
-      status: taxStatus
+      name: event.target[0].value,
+      rate: event.target[1].value,
+      type: event.target[2].value,
+      status: event.target[3].value,
     };
 
-
-    // console.log(formData);
-
-    
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
 
+    // Posting formData to Tax Model in Database
     try {
       await axios
         .post("https://mern-invoice-zc6k.onrender.com/api/tax/post", formData)
@@ -53,13 +49,14 @@ const AddTaxModal = (props) => {
           console.log(error);
         });
     } catch (error) {
-      console.log('Error:',error.response.data);
+      console.log("Error:", error.response.data);
     }
 
     setValidated(true);
     if (validated) navigate("/tax");
   };
 
+  // Styling for Modal component when it is open
   const style = {
     position: "absolute",
     top: "50%",
@@ -89,14 +86,14 @@ const AddTaxModal = (props) => {
           action="POST"
           onSubmit={handleSubmit}
         >
-          <Form.Group className="mb-2" controlId="formBasicEmail">
+          <Form.Group className="mb-2" >
             <Form.Label>
               Tax Name <span className="text-red-500">&#42;</span>
             </Form.Label>
             <Form.Control type="text" placeholder="gst" required />
           </Form.Group>
 
-          <Form.Group className="mb-2" controlId="formBasicEmail">
+          <Form.Group className="mb-2" >
             <Form.Label>
               Tax Rates <span className="text-red-500">&#42;</span>
             </Form.Label>
@@ -130,7 +127,11 @@ const AddTaxModal = (props) => {
           </Form.Group>
 
           <div className="flex justify-end gap-2">
-            <Button variant="outline-primary" className="" onClick={() => navigate("/services")}>
+            <Button
+              variant="outline-primary"
+              className=""
+              onClick={() => navigate("/services")}
+            >
               Cancel
             </Button>
             <Button variant="primary" className="w-20" type="submit">

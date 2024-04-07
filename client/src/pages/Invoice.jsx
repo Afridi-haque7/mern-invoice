@@ -9,16 +9,16 @@ import axios from "axios";
 
 
 const Invoice = () => {
+  // Using useNavigate() hook to navigate to different pages
   const navigate = useNavigate();
   const handleClick = () => {
     navigate('/services');
   }
 
+  // Using useState() hook to store data from database array after fetching
   const [data, setData] = useState([]);
 
-  
-
-
+  // Fetching data from service data model using axios.get() method, it is an asynchronous function
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -30,13 +30,15 @@ const Invoice = () => {
     }
   };
 
+  // Using useEffect() hook to call fetchData() function whenever the data array is changed
   useEffect(() => {
     fetchData();
   }, [data]);
 
-
+  // For form validation purpose
   const [validated, setValidated] = useState(false);
 
+  // Checking Form Validation when user submit the form
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -46,23 +48,24 @@ const Invoice = () => {
     setValidated(true);
   };
 
+  // For selecting the current index of data[] upon selection 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  // Function for handling index selection
   const handleSelectChange = (event) => {
     const index = event.target.value;
     setSelectedIndex(index);
-    console.log("Event: ",index);
   };
 
   return (
     <div className="p-5 lg:p-3  bg-gray-100">
       <h3 className="text-2xl font-bold">Add Invoice</h3>
       <div className="form">
+      {/* Main Form Component, Used Bootstrap Form for convenience */}
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <div className="lg:flex justify-between">
             <Form.Group
               className="mb-3 w-full lg:w-[30%] border-black"
-              controlId="formBasicEmail"
             >
               <Form.Label>Invoice Number</Form.Label>
               <Form.Control type="text" placeholder="HHINV001238" />
@@ -70,7 +73,6 @@ const Invoice = () => {
 
             <Form.Group
               className="mb-3 w-full lg:w-[30%]"
-              controlId="formBasicEmail"
             >
               <Form.Label>
                 Customer Name <span className="text-red-500">&#42;</span>
@@ -83,7 +85,6 @@ const Invoice = () => {
 
             <Form.Group
               className="mb-3 w-full lg:w-[30%]"
-              controlId="formBasicEmail"
             >
               <Form.Label>
                 Invoice Date <span className="text-red-500">&#42;</span>
@@ -95,7 +96,6 @@ const Invoice = () => {
           <div className="lg:flex justify-between">
             <Form.Group
               className="mb-3 w-full lg:w-[30%]"
-              controlId="formBasicEmail"
             >
               <Form.Label>
                 Due Date <span className="text-red-500">&#42;</span>
@@ -105,7 +105,6 @@ const Invoice = () => {
 
             <Form.Group
               className="mb-3 w-full lg:w-[30%]"
-              controlId="formBasicEmail"
             >
               <Form.Label>Reference Number</Form.Label>
               <Form.Control type="text" placeholder="" />
@@ -113,7 +112,6 @@ const Invoice = () => {
 
             <Form.Group
               className="mb-3 w-full lg:w-[30%]"
-              controlId="formBasicEmail"
             >
               <Form.Label>
                 Payment Method <span className="text-red-500">&#42;</span>
@@ -132,7 +130,7 @@ const Invoice = () => {
             </Form.Group>
           </div>
           <div className="flex">
-            <Form.Group className="mb-5 w-full" controlId="formBasicEmail">
+            <Form.Group className="mb-5 w-full" >
               <Form.Label>
                 Services <span className="text-red-500">&#42;</span>
               </Form.Label>
@@ -144,7 +142,7 @@ const Invoice = () => {
                   onChange={handleSelectChange}
                   className="rounded-md border bg-white w-full h-10 py-0 px-2 pl-2 pr-7 focus:ring-2 focus:ring-inset"
                 >
-
+                  {/* Mapping data from data[] array to show service available */}
                   {data.map((i, index) => (
                     <option key={index} value={index}>
                       {i.type}
@@ -155,9 +153,10 @@ const Invoice = () => {
               </span>
             </Form.Group>
           </div>
-
+          {/* Service table component, sending index as props */}
           <ServiceTable ind={selectedIndex} />
 
+          {/* Form submitting buttons */}
           <div className="flex justify-end gap-4">
             <Button variant="outline-primary" type="submit">
               Cancel

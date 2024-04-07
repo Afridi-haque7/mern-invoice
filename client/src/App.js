@@ -7,7 +7,7 @@ import Tax from "./pages/Tax";
 
 function App() {
   return (
-    <div className="">
+    <div>
       <Routes>
         <Route path="/" element={<Invoice />} />
         <Route path="/services" element={<Services/>} />
