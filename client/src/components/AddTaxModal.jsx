@@ -43,12 +43,15 @@ const AddTaxModal = (props) => {
 
     try {
       await axios
-        .post("http://localhost:8000/api/tax/post", formData)
+        .post("https://mern-invoice-zc6k.onrender.com/api/tax/post", formData)
         .then((response) => response.data)
         .then((data) => {
           console.log("Success:", data);
-          alert('Successfully Data Added!')
-        }).catch((error) => {console.log(error);});
+          alert("Successfully Data Added!");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } catch (error) {
       console.log('Error:',error.response.data);
     }
