@@ -4,7 +4,7 @@ import ServiceModel from "../models/ServiceModel.js";
 const router = express.Router();
 
 
-//CREATE
+//Service API Route for POST method, For creating a new service model
 router.post("/post", async (req, res) => {
   const newServiceModel = new ServiceModel(req.body);
   console.log(newServiceModel);
@@ -18,7 +18,7 @@ router.post("/post", async (req, res) => {
 });
 
 
-//GETALL
+//Service API Route for GETALL method, For getting all service models from database
 router.get("/get", async (req, res) => {
   try {
     const serviceModels = await ServiceModel.find();
@@ -30,7 +30,7 @@ router.get("/get", async (req, res) => {
 });
 
 
-//GET
+//Service API Route for GET method, For getting a particular service model from database
 router.get("/get/:id", async (req, res) => {
   try {
     const serviceModel = await ServiceModel.findById(req.params.id);
@@ -41,7 +41,7 @@ router.get("/get/:id", async (req, res) => {
   }
 });
 
-//UPDATE
+//Service API Route for PUT method, For updating an existing service model
 router.put("/update/:id", async (req, res) => {
   try {
     const updatedServiceModel = await ServiceModel.findByIdAndUpdate(
@@ -56,7 +56,7 @@ router.put("/update/:id", async (req, res) => {
   }
 });
 
-// DELETE
+//Service API Route for DELETE method, For deleting an existing service model
 router.delete("/delete/:id", async (req, res) => {
   try {
     await ServiceModel.findByIdAndDelete(req.params.id);

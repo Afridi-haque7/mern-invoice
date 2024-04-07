@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-
+// Creating a database schema object for Service Details
 const ServiceSchema = new mongoose.Schema({
   type: {
     type: String,
@@ -29,4 +29,5 @@ const ServiceSchema = new mongoose.Schema({
   }
 });
 
+// Exporting the service schema
 export default mongoose.model("ServiceModel", ServiceSchema);
