@@ -16,7 +16,9 @@ const Services = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/tax/get");
+      const response = await axios.get(
+        "https://mern-invoice-zc6k.onrender.com/api/tax/get"
+      );
       setData(response.data);
     } catch (error) {
       console.log("Error fetching data: " + error.message);
@@ -56,12 +58,15 @@ const Services = () => {
 
     try {
       await axios
-        .post("http://localhost:8000/api/service/post", formData)
+        .post(
+          "https://mern-invoice-zc6k.onrender.com/api/service/post",
+          formData
+        )
         .then((response) => response.data)
         .then((data) => {
           console.log("Success:", data);
           alert("Successfully Data Added!");
-          navigate('/');
+          navigate("/");
         })
         .catch((error) => {
           console.log(error);

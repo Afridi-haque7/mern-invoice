@@ -21,7 +21,9 @@ const Invoice = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/service/get");
+      const response = await axios.get(
+        "https://mern-invoice-zc6k.onrender.com/api/service/get"
+      );
       setData(response.data);
     } catch (error) {
       console.log("Error fetching data: " + error.message);

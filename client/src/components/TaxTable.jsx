@@ -26,7 +26,9 @@ const TaxTable = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/tax/delete/${id}`);
+      await axios.delete(
+        `https://mern-invoice-zc6k.onrender.com/api/tax/delete/${id}`
+      );
       console.log("Tax details deleted:", id);
       alert('Data deleted successfully');
       setData((prevData) => prevData.filter((item) => item.id !== id));

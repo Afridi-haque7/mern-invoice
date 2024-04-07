@@ -20,7 +20,9 @@ const ServiceTable = (props) => {
   const fetchData = async () => {
 
     try {
-      const response = await axios.get("http://localhost:8000/api/service/get");
+      const response = await axios.get(
+        "https://mern-invoice-zc6k.onrender.com/api/service/get"
+      );
       setData(response.data);
       setSingleData(response.data[props.ind]);
       const amount = (qty * response.data[props.ind].price);
@@ -50,7 +52,9 @@ const ServiceTable = (props) => {
   const [deleteData, setDeleteData] = useState(false);
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/service/delete/${id}`);
+      await axios.delete(
+        `https://mern-invoice-zc6k.onrender.com/api/service/delete/${id}`
+      );
       console.log("Tax details deleted:", id);
       alert("Service deleted successfully");
       setData((prevData) => prevData.filter((item) => item.id !== id));
