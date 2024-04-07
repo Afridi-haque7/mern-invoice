@@ -19,8 +19,12 @@ const ServiceSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  tax: {
+  taxType: {
     type: String,
+    required: true,
+  },
+  taxRate: {
+    type: Number,
     required: true,
   }
 });

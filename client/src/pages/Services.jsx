@@ -31,15 +31,23 @@ const Services = () => {
     const form = event.currentTarget;
     event.preventDefault();
 
+    // const [taxData, setTaxData] = useState(null);
     const formData = {
       type: event.target[0].value,
       price: event.target[1].value,
       disType: event.target[2].value,
       disValue: event.target[3].value,
-      tax: event.target[4].value,
+      taxType: '',
+      taxRate: '',
     };
 
-    // console.log(formData);
+    const selectedIndex = event.target[4].selectedIndex;
+    const selectedOptionValue = event.target[4][selectedIndex].value;
+    const selectedOptionData = JSON.parse(selectedOptionValue);
+    formData.taxType = selectedOptionData.name;
+    formData.taxRate = selectedOptionData.rate;
+
+    console.log(formData);
 
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -146,7 +154,7 @@ const Services = () => {
                   {data.map((i, index) => (
                     <option
                       key={index}
-                      value={i.name}
+                      value={JSON.stringify({ name: i.name, rate: i.rate })}
                     >{`${i.name} ${i.rate}%`}</option>
                   ))}
                 </select>

@@ -1,12 +1,11 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Dropdown from "react-bootstrap/Dropdown";
 import Billing from "../components/Billing";
 import ServiceTable from "../components/ServiceTable";
 import { useNavigate } from "react-router-dom";
-import InputGroup from "react-bootstrap/InputGroup";
 import { CirclePlus } from "lucide-react";
+import axios from "axios";
 
 
 
@@ -15,6 +14,22 @@ const Invoice = () => {
   const handleClick = () => {
     navigate('/services');
   }
+
+  const [data, setData] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/service/get");
+      setData(response.data);
+    } catch (error) {
+      console.log("Error fetching data: " + error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
 
   const [validated, setValidated] = useState(false);
 
@@ -27,6 +42,14 @@ const Invoice = () => {
 
     setValidated(true);
   };
+
+  const [selectedIndex, setSelectedIndex] = useState(null);
+
+  const handleSelectChange = (event) => {
+    const index = event.target.selectedIndex;
+    setSelectedIndex(index);
+  };
+  console.log(selectedIndex);
 
   return (
     <div className="p-3  bg-gray-100">
@@ -94,8 +117,8 @@ const Invoice = () => {
               </Form.Label>
               <br />
               <select
-                id="currency"
-                name="currency"
+                id="payment"
+                name="payment"
                 className="rounded-md border bg-white w-full h-10 py-0 pl-2 pr-7 focus:ring-2 focus:ring-inset"
                 required
               >
@@ -112,27 +135,30 @@ const Invoice = () => {
               </Form.Label>
               <span className="flex gap-1">
                 <select
-                  id="currency"
-                  name="currency"
+                  id="service-type"
+                  name="serviceType"
                   required
+                  onChange={handleSelectChange}
                   className="rounded-md border bg-white w-full h-10 py-0 px-2 pl-2 pr-7 focus:ring-2 focus:ring-inset"
                 >
-                  <option value="cash">Hotel</option>
-                  <option value="card"></option>
-                  <option value="upi"></option>
+                  {data.map((i, index) => (
+                    <option key={index} value={i.name}>
+                      {i.type}
+                    </option>
+                  ))}
                 </select>
                 <Button onClick={handleClick}>{<CirclePlus />}</Button>
               </span>
             </Form.Group>
           </div>
 
-          <ServiceTable />
+          <ServiceTable ind={selectedIndex === null ? 0 : selectedIndex}/>
 
           <hr />
           <Billing />
 
           <div className="flex justify-end gap-4">
-            <Button variant="outline-primary"  type="submit">
+            <Button variant="outline-primary" type="submit">
               Cancel
             </Button>
             <Button variant="primary" className="w-20" type="submit">

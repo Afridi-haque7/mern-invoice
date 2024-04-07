@@ -1,17 +1,27 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 import { Trash2, FilePenLine } from "lucide-react";
+import axios from "axios";
 
-const data = [
-  {
-    service: "Hotel",
-    rate: 1200,
-    discount: 120,
-    tax: 194.40,
-    amount: 1274.40,
-  },
-];
 
-const ServiceTable = () => {
+const ServiceTable = (props) => {
+  
+  const [data, setData] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/service/get");
+      setData(response.data);
+    } catch (error) {
+      console.log("Error fetching data: " + error.message);
+    }
+  };
+
+  
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
   return (
     <div>
       <table className="table-auto w-full border mb-3 rounded-md ">
@@ -29,7 +39,7 @@ const ServiceTable = () => {
         <tbody className="bg-white px-10">
           {data.map((i) => (
             <tr>
-              <td>{i.service}</td>
+              <td>{i.type}</td>
               <td>
                 <input
                   type="number"
@@ -37,10 +47,17 @@ const ServiceTable = () => {
                   placeholder="1"
                 />
               </td>
-              <td>&#x20b9;{i.rate}</td>
-              <td>&#x20b9;{i.discount}</td>
-              <td>&#x20b9;{i.tax}</td>
-              <td>&#x20b9;{i.amount}</td>
+              <td>&#x20b9;{i.price.toFixed(2)}</td>
+              <td>&#x20b9;{(i.price * i.disValue) / 100}</td>
+              <td>&#x20b9;{(i.taxRate * i.price) / 100}</td>
+              <td>
+                &#x20b9;
+                {(
+                  i.price +
+                  (i.taxRate * i.price) / 100 -
+                  (i.disValue * i.price) / 100
+                ).toFixed(2)}
+              </td>
               <td>
                 <span className="flex gap-2">
                   <FilePenLine className="bg-gray-300 p-1 rounded-xl cursor-pointer" />
