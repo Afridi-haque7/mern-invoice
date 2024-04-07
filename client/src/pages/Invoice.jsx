@@ -17,6 +17,9 @@ const Invoice = () => {
 
   const [data, setData] = useState([]);
 
+  
+
+
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:8000/api/service/get");
@@ -28,7 +31,7 @@ const Invoice = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [data]);
 
 
   const [validated, setValidated] = useState(false);
@@ -43,13 +46,14 @@ const Invoice = () => {
     setValidated(true);
   };
 
-  const [selectedIndex, setSelectedIndex] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleSelectChange = (event) => {
-    const index = event.target.selectedIndex;
+    const index = event.target.value;
     setSelectedIndex(index);
+    console.log("Event: ",index);
   };
-  console.log(selectedIndex);
+  // console.log(selectedIndex);
 
   return (
     <div className="p-3  bg-gray-100">
@@ -141,8 +145,10 @@ const Invoice = () => {
                   onChange={handleSelectChange}
                   className="rounded-md border bg-white w-full h-10 py-0 px-2 pl-2 pr-7 focus:ring-2 focus:ring-inset"
                 >
+                  {/* <option selected="true" ></option> */}
+
                   {data.map((i, index) => (
-                    <option key={index} value={i.name}>
+                    <option key={index} value={index}>
                       {i.type}
                     </option>
                   ))}
@@ -152,10 +158,10 @@ const Invoice = () => {
             </Form.Group>
           </div>
 
-          <ServiceTable ind={selectedIndex === null ? 0 : selectedIndex}/>
+          <ServiceTable ind={selectedIndex} />
 
-          <hr />
-          <Billing />
+          {/* <hr /> */}
+          {/* <Billing /> */}
 
           <div className="flex justify-end gap-4">
             <Button variant="outline-primary" type="submit">

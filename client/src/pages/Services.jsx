@@ -47,7 +47,7 @@ const Services = () => {
     formData.taxType = selectedOptionData.name;
     formData.taxRate = selectedOptionData.rate;
 
-    console.log(formData);
+    // console.log(formData);
 
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -61,6 +61,7 @@ const Services = () => {
         .then((data) => {
           console.log("Success:", data);
           alert("Successfully Data Added!");
+          navigate('/');
         })
         .catch((error) => {
           console.log(error);
@@ -94,6 +95,7 @@ const Services = () => {
               >
                 <option value="Hotel">Hotel</option>
                 <option value="Product">Product</option>
+                <option value="Other">Other</option>
               </select>
             </Form.Group>
 
@@ -105,7 +107,7 @@ const Services = () => {
                 Selling Price <span className="text-red-500">&#42;</span>
               </Form.Label>
               <span className="flex gap-1">
-                <Form.Control type="number" placeholder="1200" required />
+                <Form.Control type="number" placeholder="e.g.1200" min="0" required />
               </span>
             </Form.Group>
 
@@ -134,7 +136,7 @@ const Services = () => {
               <Form.Label>
                 Discount Value <span className="text-red-500">&#42;</span>
               </Form.Label>
-              <Form.Control type="number" placeholder="10" required />
+              <Form.Control type="number" placeholder="e.g.10" min="0" max="100" required />
             </Form.Group>
 
             <Form.Group
