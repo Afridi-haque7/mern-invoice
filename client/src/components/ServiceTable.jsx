@@ -45,7 +45,7 @@ const ServiceTable = (props) => {
   
   useEffect(() => {
     fetchData();
-  }, [props.ind]);
+  }, [props.ind, qty]);
 
   const [deleteData, setDeleteData] = useState(false);
   const handleDelete = async (id) => {

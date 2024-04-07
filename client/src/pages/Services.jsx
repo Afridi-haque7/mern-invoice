@@ -75,13 +75,13 @@ const Services = () => {
   };
 
   return (
-    <div className="bg-gray-100 p-3 h-[100vh]">
+    <div className="bg-gray-100 p-5 lg:p-3 h-[100vh]">
       <h3 className="text-2xl font-bold">Add Service Details</h3>
       <div className="form">
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
-          <div className="md:flex justify-between">
+          <div className="lg:flex justify-between">
             <Form.Group
-              className="mb-3 w-full md:w-[30%] border-black"
+              className="mb-3 w-full lg:w-[30%] border-black"
               controlId="formBasicEmail"
             >
               <Form.Label>
@@ -100,7 +100,7 @@ const Services = () => {
             </Form.Group>
 
             <Form.Group
-              className="mb-3 w-full md:w-[30%]"
+              className="mb-3 w-full lg:w-[30%]"
               controlId="formBasicEmail"
             >
               <Form.Label>
@@ -112,7 +112,7 @@ const Services = () => {
             </Form.Group>
 
             <Form.Group
-              className="mb-3 w-full md:w-[30%]"
+              className="mb-3 w-full lg:w-[30%]"
               controlId="formBasicEmail"
             >
               <Form.Label>
@@ -128,9 +128,9 @@ const Services = () => {
               </select>
             </Form.Group>
           </div>
-          <div className="md:flex justify-between md:w-[65%] w-full">
+          <div className="lg:flex justify-between lg:w-[65%] w-full">
             <Form.Group
-              className="mb-3 w-full md:w-[46%] border-black"
+              className="mb-3 w-full lg:w-[46%] border-black"
               controlId="formBasicEmail"
             >
               <Form.Label>
@@ -140,7 +140,7 @@ const Services = () => {
             </Form.Group>
 
             <Form.Group
-              className="mb-3 w-full md:w-[46%]"
+              className="mb-3 w-full lg:w-[46%]"
               controlId="formBasicEmail"
             >
               <Form.Label>

@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Billing from "../components/Billing";
 import ServiceTable from "../components/ServiceTable";
 import { useNavigate } from "react-router-dom";
 import { CirclePlus } from "lucide-react";
@@ -42,7 +41,6 @@ const Invoice = () => {
       event.preventDefault();
       event.stopPropagation();
     }
-
     setValidated(true);
   };
 
@@ -53,16 +51,15 @@ const Invoice = () => {
     setSelectedIndex(index);
     console.log("Event: ",index);
   };
-  // console.log(selectedIndex);
 
   return (
-    <div className="p-3  bg-gray-100">
+    <div className="p-5 lg:p-3  bg-gray-100">
       <h3 className="text-2xl font-bold">Add Invoice</h3>
       <div className="form">
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
-          <div className="md:flex justify-between">
+          <div className="lg:flex justify-between">
             <Form.Group
-              className="mb-3 w-full md:w-[30%] border-black"
+              className="mb-3 w-full lg:w-[30%] border-black"
               controlId="formBasicEmail"
             >
               <Form.Label>Invoice Number</Form.Label>
@@ -70,7 +67,7 @@ const Invoice = () => {
             </Form.Group>
 
             <Form.Group
-              className="mb-3 w-full md:w-[30%]"
+              className="mb-3 w-full lg:w-[30%]"
               controlId="formBasicEmail"
             >
               <Form.Label>
@@ -83,7 +80,7 @@ const Invoice = () => {
             </Form.Group>
 
             <Form.Group
-              className="mb-3 w-full md:w-[30%]"
+              className="mb-3 w-full lg:w-[30%]"
               controlId="formBasicEmail"
             >
               <Form.Label>
@@ -93,9 +90,9 @@ const Invoice = () => {
             </Form.Group>
           </div>
 
-          <div className="md:flex justify-between">
+          <div className="lg:flex justify-between">
             <Form.Group
-              className="mb-3 w-full md:w-[30%]"
+              className="mb-3 w-full lg:w-[30%]"
               controlId="formBasicEmail"
             >
               <Form.Label>
@@ -105,7 +102,7 @@ const Invoice = () => {
             </Form.Group>
 
             <Form.Group
-              className="mb-3 w-full md:w-[30%]"
+              className="mb-3 w-full lg:w-[30%]"
               controlId="formBasicEmail"
             >
               <Form.Label>Reference Number</Form.Label>
@@ -113,7 +110,7 @@ const Invoice = () => {
             </Form.Group>
 
             <Form.Group
-              className="mb-3 w-full md:w-[30%]"
+              className="mb-3 w-full lg:w-[30%]"
               controlId="formBasicEmail"
             >
               <Form.Label>
@@ -145,7 +142,6 @@ const Invoice = () => {
                   onChange={handleSelectChange}
                   className="rounded-md border bg-white w-full h-10 py-0 px-2 pl-2 pr-7 focus:ring-2 focus:ring-inset"
                 >
-                  {/* <option selected="true" ></option> */}
 
                   {data.map((i, index) => (
                     <option key={index} value={index}>
@@ -159,9 +155,6 @@ const Invoice = () => {
           </div>
 
           <ServiceTable ind={selectedIndex} />
-
-          {/* <hr /> */}
-          {/* <Billing /> */}
 
           <div className="flex justify-end gap-4">
             <Button variant="outline-primary" type="submit">
